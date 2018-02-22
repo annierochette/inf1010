@@ -77,23 +77,24 @@ void Client::miserProduit(ProduitAuxEncheres* produitAuxEncheres, double montant
 
 Client & Client::operator=(const Client & client)
 {
-	if (this != &client) {
-		Usager temp(*this);
-		temp = static_cast<Usager> (client);
-		dateNaissance_ = client.obtenirDateNaissance();
-		if (client.monPanier_ != nullptr) {
-			delete monPanier_;
-			monPanier_ = new Panier(obtenirIdentifiant());
-			for (int i = 0; i < client.monPanier_->obtenirNombreContenu(); i++) {
-				monPanier_->ajouter(client.monPanier_->obtenirContenuPanier()[i]);
-			}
-		}
-		else
-			monPanier_ = nullptr;
-	}
-	return *this;
+    if (this != &client) {
+        this->modifierNom(client.obtenirNom());
+        this->modifierPrenom(client.obtenirPrenom());
+        this->modifierIdentifiant(client.obtenirIdentifiant());
+        this->modifierCodePostal(client.obtenirCodePostal());
+        dateNaissance_ = client.obtenirDateNaissance();
+        if (client.monPanier_ != nullptr) {
+            delete monPanier_;
+            monPanier_ = new Panier(obtenirIdentifiant());
+            for (int i = 0; i < client.monPanier_->obtenirNombreContenu(); i++) {
+                monPanier_->ajouter(client.monPanier_->obtenirContenuPanier()[i]);
+            }
+        }
+        else
+            monPanier_ = nullptr;
+    }
+    return *this;
 }
-
 
 ostream & operator<<(ostream & os, const Client & client)
 {
